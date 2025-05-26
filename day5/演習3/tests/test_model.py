@@ -170,4 +170,4 @@ def test_model_reproducibility(sample_data, preprocessor):
 
     assert np.array_equal(
         predictions1, predictions2
-    ), "モデルの予測結果に再現性がありません"
+    ), "モデルの予測結果に再現性がありません。"
