@@ -6,7 +6,7 @@ import pickle
 import time
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, roc_auc_score
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
@@ -171,3 +171,16 @@ def test_model_reproducibility(sample_data, preprocessor):
     assert np.array_equal(
         predictions1, predictions2
     ), "モデルの予測結果に再現性がありません"
+
+
+def test_model_auc(train_model):
+    """モデルのAUCを検証"""
+    model, X_test, y_test = train_model
+
+    # 予測と精度計算
+    y_score = model.predict_proba(X_test)[:, 1]
+    auc_score = roc_auc_score(y_test, y_score)
+
+    # Titanicデータセットでは0.75以上の精度が一般的に良いとされる
+    assert auc_score >= 0.75, f"モデルのAUCが低すぎます: {auc_score}"
+    
