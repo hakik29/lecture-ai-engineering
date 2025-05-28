@@ -183,4 +183,3 @@ def test_model_auc(train_model):
 
     # Titanicデータセットでは0.75以上の精度が一般的に良いとされる
     assert auc_score >= 0.75, f"モデルのAUCが低すぎます: {auc_score}"
-    
